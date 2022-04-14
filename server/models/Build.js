@@ -20,77 +20,140 @@ const buildSchema = new Schema(
       get: timestamp => dateFormat(timestamp)
     },
     username: {
-      type: String,
-      required: true
+      type: String
     },
     desc: {
-      type: String,
-      required: true
+      type: String
     },
     class: {
-      type: String,
-      required: true
+      type: Schema.Types.ObjectId,
+      ref: 'Class'
     },
     keepsake: {
-      type: String,
-      required: true
+      type: String
     },
     level: {
-      type: Number,
-      required: true
+      type: Number
     },
     vigor: {
-      type: Number,
-      required: true
+      type: Number
     },
     mind: {
-      type: Number,
-      required: true
+      type: Number
     },
     endurance: {
-      type: Number,
-      required: true
+      type: Number
     },
     strength: {
-      type: Number,
-      required: true
+      type: Number
     },
     dexterity: {
-      type: Number,
-      required: true
+      type: Number
     },
     intelligence: {
-      type: Number,
-      required: true
+      type: Number
     },
     faith: {
-      type: Number,
-      required: true
+      type: Number
     },
     arcane: {
-      type: Number,
-      required: true
+      type: Number
     },
     head: {
       type: Schema.Types.ObjectId,
-      ref: 'armor'
+      ref: 'Armor'
     },
     body: {
       type: Schema.Types.ObjectId,
-      ref: 'armor'
+      ref: 'Armor'
     },
     arms: {
       type: Schema.Types.ObjectId,
-      ref: 'armor'
+      ref: 'Armor'
     },
     legs: {
       type: Schema.Types.ObjectId,
-      ref: 'armor'
-    }
-  },
-  {
-    toJSON: {
-      getters: true
+      ref: 'Armor'
+    },
+    rh1: {
+      type: Schema.Types.ObjectId,
+      ref: 'Weapon'
+    },
+    rh2: {
+      type: Schema.Types.ObjectId,
+      ref: 'Weapon'
+    },
+    rh3: {
+      type: Schema.Types.ObjectId,
+      ref: 'Weapon'
+    },
+    lh1: {
+      type: Schema.Types.ObjectId,
+      ref: 'Weapon'
+    },
+    lh2: {
+      type: Schema.Types.ObjectId,
+      ref: 'Weapon'
+    },
+    lh3: {
+      type: Schema.Types.ObjectId,
+      ref: 'Weapon'
+    },
+    tali1: {
+      type: Schema.Types.ObjectId,
+      ref: 'Talisman'
+    },
+    tali2: {
+      type: Schema.Types.ObjectId,
+      ref: 'Talisman'
+    },
+    tali3: {
+      type: Schema.Types.ObjectId,
+      ref: 'Talisman'
+    },
+    tali4: {
+      type: Schema.Types.ObjectId,
+      ref: 'Talisman'
+    },
+    spell1: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell2: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell3: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell4: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell5: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell6: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell7: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell8: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell9: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
+    },
+    spell10: {
+      type: Schema.Types.ObjectId,
+      ref: 'Spell'
     }
   }
 );
