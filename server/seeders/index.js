@@ -1,23 +1,25 @@
 const faker = require('faker');
 const seedArmor = require('./armor-seeds');
+const seedAmmo = require('./ammo-seeds');
 const seedWeapon = require('./weapon-seeds');
 const seedTalisman = require('./talisman-seeds');
 const seedSpell = require('./spell-seeds');
 const seedClass = require('./class-seeds');
 
 const db = require('../config/connection');
-const { User, Armor , Weapon, Talisman, Spell, Class, Build } = require('../models');
+const { User, Armor, Ammo, Weapon, Talisman, Spell, Class } = require('../models');
 
 db.once('open', async () => {
   await User.deleteMany({});
-  await Build.deleteMany({});
   await Class.deleteMany({});
   await Armor.deleteMany({});
   await Weapon.deleteMany({});
+  await Ammo.deleteMany({});
   await Talisman.deleteMany({});
   await Spell.deleteMany({});
   await seedClass();
   await seedArmor();
+  await seedAmmo();
   await seedWeapon();
   await seedTalisman();
   await seedSpell();
