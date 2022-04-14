@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const {ApolloServer} = require('apollo-server-express');
-// const path = require('path');
+const path = require('path');
 
 const {typeDefs, resolvers} = require('./schemas');
 const {authMiddleware} = require('./utils/auth');
@@ -28,13 +28,13 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 // Serve up static assets
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '../client/build')));
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../client/build/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
 
 db.once('open', () => {
   app.listen(PORT, () => {
