@@ -36,6 +36,10 @@ const typeDefs = gql`
     lh1: Weapon
     lh2: Weapon
     lh3: Weapon
+    arrow1: Ammo
+    arrow2: Ammo
+    bolt1: Ammo
+    bolt2: Ammo
     tali1: Talisman
     tali2: Talisman
     tali3: Talisman
@@ -79,7 +83,7 @@ const typeDefs = gql`
   }
   
   type AttributeEntry {
-    amount: Int
+    amount: Float
     name: String
   }
 
@@ -90,11 +94,22 @@ const typeDefs = gql`
     image: String
     description: String
     attack: [AttributeEntry]
-    defense: [AttributeEntry]
+    defence: [AttributeEntry]
     scalesWith: [ScalingEntry]
     requiredAttributes: [AttributeEntry]
     category: String
     weight: Float
+  }
+
+  type Ammo {
+    _id: ID
+    source_id: String
+    name: String
+    image: String
+    description: String
+    type: String
+    attackPower: [AttributeEntry]
+    passive: String
   }
   
   type Armor {
@@ -138,67 +153,21 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    users: [User]
     user(username: String!): User
-    builds(username: String): [Build]
-    build(_id: ID!): Build
-    class(
-      _id: ID
-      source_id: String
-      name: String
-      description: String
-      page: Int = 0
-      limit: Int
-      search: String
-    ): [Class]
+    allUsers: [User]
+    getAllBuilds(username: String): [Build]
+    getBuild(_id: ID!): Build
+    getAllClass: [Class]
     getClass(_id: ID!): Class
-    weapon(
-      _id: ID
-      source_id: String
-      name: String
-      description: String
-      category: String
-      weight: Float
-      page: Int = 0
-      limit: Int
-      search: String
-    ): [Weapon]
+    getAllWeapons: [Weapon]
     getWeapon(_id: ID!): Weapon
-    armor(
-      _id: ID
-      source_id: String
-      name: String
-      description: String
-      category: String
-      weight: Float
-      page: Int = 0
-      limit: Int
-      search: String
-    ): [Armor]
+    getAllAmmo: [Ammo]
+    getAmmo(_id: ID!): Ammo
+    getAllArmor: [Armor]
     getArmor(_id: ID!): Armor
-    talisman(
-      _id: ID
-      source_id: String
-      name: String
-      description: String
-      effect: String
-      page: Int = 0
-      limit: Int
-      search: String
-    ): [Talisman]
+    getAllTalisman: [Talisman]
     getTalisman(_id: ID!): Talisman
-    spell(
-      _id: ID
-      source_id: String
-      name: String
-      description: String
-      type: String
-      cost: Int
-      slots: Int
-      page: Int = 0
-      limit: Int
-      search: String
-    ): [Spell]
+    getAllSpell: [Spell]
     getSpell(_id: ID!): Spell
   }
 
@@ -232,6 +201,10 @@ const typeDefs = gql`
       lh1: ID
       lh2: ID
       lh3: ID
+      arrow1: ID
+      arrow2: ID
+      bolt1: ID
+      bolt2: ID
       tali1: ID
       tali2: ID
       tali3: ID
@@ -247,7 +220,6 @@ const typeDefs = gql`
       spell9: ID
       spell10: ID
     ): Build
-    addReaction(buildId: ID!, reactionBody: String!): Build
   }
 `;
 

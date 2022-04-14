@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Build, Armor, Weapon, Talisman, Spell } = require('../models');
+const { User, Build, Armor, Ammo, Weapon, Talisman, Spell, Class } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -15,17 +15,17 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    users: async () => {
+    user: async (parent, { username }) => {
+      return User.findOne({ username })
+      .select('-__v -password')
+      .populate('builds');
+    },
+    allUsers: async () => {
       return User.find()
         .select('-__v -password')
         .populate('builds');
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username })
-      .select('-__v -password')
-        .populate('builds');
-    },
-    builds: async (parent, { username }) => {
+    getAllBuilds: async (parent, { username }) => {
       const params = username ? { username } : {};
       return Build.find(params).sort({ createdAt: -1 })
         .populate('class')
@@ -39,6 +39,10 @@ const resolvers = {
         .populate('lh1')
         .populate('lh2')
         .populate('lh3')
+        .populate('arrow1')
+        .populate('arrow2')
+        .populate('bolt1')
+        .populate('bolt2')
         .populate('tali1')
         .populate('tali2')
         .populate('tali3')
@@ -54,13 +58,51 @@ const resolvers = {
         .populate('spell9')
         .populate('spell10');
     },
-    build: async (parent, { _id }) => {
+    getBuild: async (parent, { _id }) => {
       return Build.findOne({ _id });
     },
-    weapon: async () => {
+    getAllClass: async () => {
+      return Class.find()
+      .select('-__v')
+    },
+    getClass: async (parent, { _id }) => {
+      return Class.findOne({ _id });
+    },
+    getAllWeapons: async () => {
       return Weapon.find()
-        .select('-__v')
-    }
+      .select('-__v')
+    },
+    getWeapon: async (parent, { _id }) => {
+      return Weapon.findOne({ _id });
+    },
+    getAllAmmo: async () => {
+      return Ammo.find()
+      .select('-__v')
+    },
+    getAmmo: async (parent, { _id }) => {
+      return Ammo.findOne({ _id });
+    },
+    getAllArmor: async () => {
+      return Armor.find()
+      .select('-__v')
+    },
+    getArmor: async (parent, { _id }) => {
+      return Armor.findOne({ _id });
+    },
+    getAllTalisman: async () => {
+      return Talisman.find()
+      .select('-__v')
+    },
+    getTalisman: async (parent, { _id }) => {
+      return Talisman.findOne({ _id });
+    },
+    getAllSpell: async () => {
+      return Spell.find()
+      .select('-__v')
+    },
+    getSpell: async (parent, { _id }) => {
+      return Spell.findOne({ _id });
+    },
   },
   
   Mutation: {
@@ -97,19 +139,6 @@ const resolvers = {
         );
 
         return build;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    addReaction: async (parent, { thoughtId, reactionBody }, context) => {
-      if (context.user) {
-        const updatedThought = await Build.findOneAndUpdate(
-          { _id: thoughtId },
-          { $push: { reactions: { reactionBody, username: context.user.username } } },
-          { new: true, runValidators: true }
-        );
-
-        return updatedThought;
       }
 
       throw new AuthenticationError('You need to be logged in!');
