@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Build } = require('../models');
+const { User, Build, Armor, Weapon, Talisman, Spell } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -22,18 +22,47 @@ const resolvers = {
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
-        .select('-__v -password')
+      .select('-__v -password')
         .populate('builds');
     },
     builds: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Build.find(params).sort({ createdAt: -1 });
+      return Build.find(params).sort({ createdAt: -1 })
+        .populate('class')
+        .populate('head')
+        .populate('body')
+        .populate('arms')
+        .populate('legs')
+        .populate('rh1')
+        .populate('rh2')
+        .populate('rh3')
+        .populate('lh1')
+        .populate('lh2')
+        .populate('lh3')
+        .populate('tali1')
+        .populate('tali2')
+        .populate('tali3')
+        .populate('tali4')
+        .populate('spell1')
+        .populate('spell2')
+        .populate('spell3')
+        .populate('spell4')
+        .populate('spell5')
+        .populate('spell6')
+        .populate('spell7')
+        .populate('spell8')
+        .populate('spell9')
+        .populate('spell10');
     },
     build: async (parent, { _id }) => {
       return Build.findOne({ _id });
+    },
+    weapon: async () => {
+      return Weapon.find()
+        .select('-__v')
     }
   },
-
+  
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
