@@ -99,6 +99,22 @@ const buildSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Weapon'
     },
+    arrow1: {
+      type: Schema.Types.ObjectId,
+      ref: 'Ammo'
+    },
+    arrow2: {
+      type: Schema.Types.ObjectId,
+      ref: 'Ammo'
+    },
+    bolt1: {
+      type: Schema.Types.ObjectId,
+      ref: 'Ammo'
+    },
+    bolt2: {
+      type: Schema.Types.ObjectId,
+      ref: 'Ammo'
+    },
     tali1: {
       type: Schema.Types.ObjectId,
       ref: 'Talisman'
