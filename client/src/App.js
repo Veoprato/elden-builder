@@ -1,27 +1,30 @@
 import React from "react";
-import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { Route, Switch } from "react-router"
+// import { Container } from '@material-ui/core';
 
-const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
-});
+import Header from './components/Header'
 
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache(),
-});
-
+import Start from "./pages/Start";
+import Home from "./pages/Home";
+import Classes from "./pages/Classes";
+import NoMatch from "./pages/NoMatch";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <div className="flex-column justify-flex-start min-100-vh">
+      <div className="App">
         <Header />
-        <div className="container">
-          <Home />
-        </div>
-        <Footer />
+        <Switch>
+          <Route strict exact path="/" component={Start} />
+          <Route strict exact path="/home" component={Home} />
+          <Route strict exact path="/classes" component={Classes} />
+          <Route strict exact path="/login" component={Login} />
+          <Route strict exact path="/signup" component={Signup} />
+
+          <Route component={NoMatch} />
+        </Switch>
       </div>
-    </ApolloProvider>
   );
 }
 
